@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
+
+    <!--name属性用于定义持久化单元的名字 (name必选,空值也合法);-->
+    <!--transaction-type 指定事务类型(可选)
+    1. RESOURCE_LOCAL本地事务
+    2. jta 分布式事务-->
+
+    <persistence-unit name="jpa" transaction-type="RESOURCE_LOCAL">
+        <!-- javax.persistence.PersistenceProvider接口的一个实现类(可选) 跟第三方orm框架有关-->
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <!-- Jta-data-source和 non-jta-data-source用于分别指定持久化提供商使用的JTA和/或non-JTA数据源的全局JNDI名称(可选) -->
+        <!--<jta-data-source>java:/MySqlDS</jta-data-source>-->
+        <!--<non-jta-data-source> </non-jta-data-source>-->
+        <!-- 以包含persistence.xml的jar文件为基准的相对路径,添加额外的jar文件.(可选) -->
+        <!--<jar-file>../lib/model.jar</jar-file>-->
+
+        <!--注册实体类-->
+        <class>com.werner.demo.bean.Dept</class>
+        <!--<class>com.werner.demo.bean.Emp</class>-->
+        <!-- 声明是否扫描jar文件中标注了@Enity类加入到上下文.不扫描,则如下:(可选) -->
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+        <properties>
+            <!--基本配值 -->
+            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
+            <property name="hibernate.temp.use_jdbc_metadata_defaults" value="false"/>
+
+
+            <!--第三方orm 以:hibernate-->
+
+            <!-- 驱动类型:数据库类型:thin:@ip地址:端口:监听器名称 -->
+            <property name="hibernate.connection.url" value="jdbc:mysql:///scott"/>
+            <!--方言-->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL55Dialect"/>
+            <!-- 访问数据库用户 -->
+            <property name="hibernate.connection.username" value="root"/>
+            <!-- 访问数据库密码 -->
+            <property name="hibernate.connection.password" value="root"/>
+            <!--create是建表、清空数据库数据 update可以修改表中的数据、可以修改表结构、不可以建表 none只可以修改表中的数据，不编辑表结构 -->
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <!-- 显示sql语句 -->
+            <property name="hibernate.show_sql" value="true"/>
+            <!-- 输出格式化后的sql,更方便查看 -->
+            <property name="hibernate.format_sql" value="true"/>
+
+
+
+            <!--其它配值 -->
+            <property name="hibernate.connection.provider_class"
+                      value="org.hibernate.c3p0.internal.C3P0ConnectionProvider"/>
+            <!-- 最小连接数 -->
+            <property name="c3p0.min_size" value="5"/>
+            <!-- 最大连接数 -->
+            <property name="c3p0.max_size" value="30"/>
+            <!--最大空闲时间,60秒内未使用则连接被丢弃。若为0则永不丢弃。Default: 0 -->
+            <property name="c3p0.maxIdleTime" value="0"/>
+            <!-- 获得连接的超时时间,如果超过这个时间,会抛出异常，单位毫秒 -->
+            <property name="c3p0.timeout" value="1800"/>
+            <!-- 最大的PreparedStatement的数量 -->
+            <property name="c3p0.max_statements" value="50"/>
+            <!-- 每隔10秒检查连接池里的空闲连接 ，单位是秒 -->
+            <property name="c3p0.idle_test_period" value="10"/>
+            <!-- 当连接池里面的连接用完的时候，C3P0一下获取的新的连接数 -->
+            <property name="c3p0.acquire_increment" value="1"/>
+            <!-- 是否每次都验证连接是否可用 -->
+            <property name="c3p0.validate" value="true"/>
+            <!--hibernate 配合c3p0-->
+
+        </properties>
+    </persistence-unit>
+
+</persistence>
+
+
+
